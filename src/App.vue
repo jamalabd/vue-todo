@@ -6,12 +6,14 @@
     - create new todo
         - input control ✅
         - update state with input data ✅
-          - form submission
-            - prevent default action
-            - create new action to add to the array on submit
-    - read todo's
-    - update todo
-    - delete todo 
+          - form submission ✅
+            - prevent default action ✅
+            - create new action to add to the array on submit ✅
+    - read todo's ✅
+    - update todo 
+      - update todo isnt working properly
+      - save todo isnt working properly
+    - delete todo ✅ 
 --> 
 <script setup>
 import {ref} from 'vue'
@@ -19,6 +21,8 @@ import {ref} from 'vue'
 // create the data or fetch the data
 const todos = ref([{todo: 'My to da loo'}]);
 const newTodo = ref(''); 
+const editedTodo = ref(''); 
+const editing = ref(false);
 // function handling submit
 const addTodo = ()=>{
   if(newTodo.value){
@@ -27,6 +31,19 @@ const addTodo = ()=>{
     })
     newTodo.value = '';
   }
+}
+
+const editTodo =(index)=> {
+    editing.value = true;
+    todos.value[index].todo = editedTodo;
+}
+
+const saveTodo =()=> {
+    editing.value = false;
+}
+
+const deleteTodo = (index)=>{
+   todos.value = todos.value.filter((todo, indexofTodo) => indexofTodo !== index); 
 }
 
 </script>
@@ -42,8 +59,12 @@ const addTodo = ()=>{
       <button type="submit" class="searchBtn"> Save </button>
       </form>
       <ul id="todoList">
-        <li v-for="item in todos" class="todoItem">
+        <li v-for="(item, index) in todos" class="todoItem">
           <p>{{ item.todo }}</p>
+          <label for="editTodo">
+      </label>
+      <input type="text" v-model="editedTodo" v-if="editing" name="editTodo" id="editTodo">
+          <button @click="editTodo(index)"> Edit </button><button @click="saveTodo()" v-if="editing"> Save </button><button @click="deleteTodo(index)"> Delete </button>
       </li>
       </ul>
   </div>
