@@ -1,37 +1,61 @@
 <!-- Todo list  -->
 <!-- 
-  Create todo
-  display todo's
-  delete todo's
--->
+  create data for todo ✅
+  Create todo template (html) ✅
+  CRUD operations for todo's
+    - create new todo
+        - input control ✅
+        - update state with input data ✅
+          - form submission
+            - prevent default action
+            - create new action to add to the array on submit
+    - read todo's
+    - update todo
+    - delete todo 
+--> 
 <script setup>
-import HelloWorld from './components/HelloWorld.vue'
-// import TheWelcome from './components/TheWelcome.vue'
+import {ref} from 'vue'
+
+// create the data or fetch the data
+const todos = ref([{todo: 'My to da loo'}]);
+const newTodo = ref(''); 
+// function handling submit
+const addTodo = ()=>{
+  if(newTodo.value){
+    todos.value.push({
+      todo: newTodo.value
+    })
+    newTodo.value = '';
+  }
+}
+
 </script>
 
 <template>
-  <header>
-    <img alt="Vue logo" class="logo" src="./assets/logo.svg" width="125" height="125" />
-
-    <div class="wrapper">
-      <HelloWorld msg="You did it!" />
-    </div>
-  </header>
-
   <main>
-    <div class="todoList">
+    <div class="todo">
       <h1> My Todo's</h1>
-      <form>
+      <form @submit.prevent="addTodo">
       <label for="search">
       </label>
-      <input type="text" name="search" id="search">
-      <button class="searchBtn"> Save </button>
+      <input type="text" v-model="newTodo" name="search" id="search">
+      <button type="submit" class="searchBtn"> Save </button>
       </form>
+      <ul id="todoList">
+        <li v-for="item in todos" class="todoItem">
+          <p>{{ item.todo }}</p>
+      </li>
+      </ul>
   </div>
   </main>
 </template>
 
 <style scoped>
+body {
+  padding: 5rem;
+  background-color: black;
+}
+
 header {
   line-height: 1.5;
 }
@@ -41,40 +65,20 @@ header {
   margin: 0 auto 2rem;
 }
 
-@media (min-width: 1024px) {
-  header {
-    display: flex;
-    place-items: center;
-    padding-right: calc(var(--section-gap) / 2);
-  }
-
-  .logo {
-    margin: 0 2rem 0 0;
-  }
-
-  header .wrapper {
-    display: flex;
-    place-items: flex-start;
-    flex-wrap: wrap;
-  }
-
-  main {
-    height: 100vh;
-    padding: 5rem;
-    box-shadow:black;
-    text-align: center;
-  }
-  .todoList {
+.todo {
     width: 100%;
   }
+
+#todoList {
+    list-style-type: none;
+  }
+
   #search {
     margin: 1rem 0;
     width: 90%;
     height: 100%;
   }
   .searchBtn {
-
   }
 
-}
 </style>
