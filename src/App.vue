@@ -14,6 +14,12 @@
       - update todo isnt working properly
       - save todo isnt working properly
     - delete todo ✅ 
+  Future Features
+    - styling update
+      - implement bootstrap or some other styling library
+    - integrate a DB into application.
+    - set reminder for todo
+    - sync todo with calenders 
 --> 
 <script setup>
 import {ref} from 'vue'
